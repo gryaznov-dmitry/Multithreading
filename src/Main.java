@@ -61,8 +61,40 @@ public class Main {
         System.out.println("Start");
         multiTimer.start();
     }
+    public static void showTask4() {
+        Scanner scanner = new Scanner(System.in);
+
+        int size;
+        int prodInterval;
+        int conInterval;
+
+        System.out.print("Введите размер буфера: ");
+        size = scanner.nextInt();
+
+        System.out.print("Введите интервал производителя: ");
+        prodInterval = scanner.nextInt()*1000;
+
+        System.out.print("Введите интервал потребителя: ");
+        conInterval = scanner.nextInt()*1000;
+
+        Buffer buffer = new Buffer(size);
+        Thread bufferThread = new Thread(buffer);
+        bufferThread.start();
+
+        Consumer consumer = new Consumer(conInterval);
+        Thread threadCon = new Thread(consumer);
+
+        Producer producer = new Producer(prodInterval);
+        Thread threadProd = new Thread(producer);
+
+        threadCon.start();
+        threadProd.start();
+
+
+    }
     public static void main(String[] args){
        // showTask1and2();
-        showTask3();
+       // showTask3();
+       showTask4();
     }
 }
