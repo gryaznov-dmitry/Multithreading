@@ -1,7 +1,10 @@
 package src;
 
 import org.w3c.dom.ls.LSOutput;
+import src.MatrixMultiplier.BaseMultiplier;
+import src.MatrixMultiplier.Multiplier;
 
+import javax.swing.plaf.metal.MetalPopupMenuSeparatorUI;
 import java.sql.SQLOutput;
 import java.util.Scanner;
 
@@ -92,9 +95,47 @@ public class Main {
 
 
     }
+    public static int[][] inputMatrix(final Scanner scanner) {
+        System.out.println("Введите количество строк матрицы:");
+        final var rows = scanner.nextInt();
+        System.out.println("Введите количество столбцов матрицы:");
+        final var cols = scanner.nextInt();
+        final var matrixA = new int[rows][cols];
+        System.out.println("Введите матрицу:");
+        for (var i = 0; i < rows; i++) {
+            for (var j = 0; j < cols; j++) {
+                matrixA[i][j] = scanner.nextInt();
+            }
+        }
+        return matrixA;
+    }
+
+    public static void showMatrixTask() {
+        final var scanner = new Scanner(System.in);
+        //int [][] mat1 = inputMatrix(scanner);
+        //int [][] mat2 = inputMatrix(scanner);
+        int[][] mat1 = new int[][] {new int[] {1, 2, 3}, new int[] {1, 2, 3}, new int[] {1, 2, 3}};
+        int[][] mat2 = new int[][] {new int[] {1, 2}, new int[] {1, 2}, new int[] {1, 2}};
+        Multiplier multiplier = new Multiplier(mat1, mat2);
+        Thread thread = new Thread(multiplier);
+
+        BaseMultiplier baseMultiplier1 = new BaseMultiplier();
+        BaseMultiplier baseMultiplier2 = new BaseMultiplier();
+
+        Thread thread1 = new Thread(baseMultiplier1);
+        Thread thread2 = new Thread(baseMultiplier2);
+
+        thread.start();
+        thread1.start();
+        thread2.start();
+
+    }
+
     public static void main(String[] args){
        // showTask1and2();
        // showTask3();
-       showTask4();
+       // showTask4();
+
+        showMatrixTask();
     }
 }
