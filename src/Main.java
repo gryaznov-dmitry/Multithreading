@@ -80,18 +80,6 @@ public class Main {
         System.out.print("Введите интервал потребителя: ");
         conInterval = scanner.nextInt()*1000;
 
-        Buffer buffer = new Buffer(size);
-        Thread bufferThread = new Thread(buffer);
-        bufferThread.start();
-
-        Consumer consumer = new Consumer(conInterval);
-        Thread threadCon = new Thread(consumer);
-
-        Producer producer = new Producer(prodInterval);
-        Thread threadProd = new Thread(producer);
-
-        threadCon.start();
-        threadProd.start();
 
 
     }
@@ -110,32 +98,11 @@ public class Main {
         return matrixA;
     }
 
-    public static void showMatrixTask() {
-        final var scanner = new Scanner(System.in);
-        //int [][] mat1 = inputMatrix(scanner);
-        //int [][] mat2 = inputMatrix(scanner);
-        int[][] mat1 = new int[][] {new int[] {1, 2, 3}, new int[] {1, 2, 3}, new int[] {1, 2, 3}};
-        int[][] mat2 = new int[][] {new int[] {1, 2}, new int[] {1, 2}, new int[] {1, 2}};
-        Multiplier multiplier = new Multiplier(mat1, mat2);
-        Thread thread = new Thread(multiplier);
-
-        BaseMultiplier baseMultiplier1 = new BaseMultiplier();
-        BaseMultiplier baseMultiplier2 = new BaseMultiplier();
-
-        Thread thread1 = new Thread(baseMultiplier1);
-        Thread thread2 = new Thread(baseMultiplier2);
-
-        thread.start();
-        thread1.start();
-        thread2.start();
-
-    }
-
     public static void main(String[] args){
        // showTask1and2();
        // showTask3();
        // showTask4();
-
         showMatrixTask();
+
     }
 }
