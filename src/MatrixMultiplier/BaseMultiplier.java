@@ -1,7 +1,5 @@
 package src.MatrixMultiplier;
 
-import src.Timer;
-
 public class BaseMultiplier implements Runnable{
 
     private final int step;
@@ -12,24 +10,26 @@ public class BaseMultiplier implements Runnable{
         this.step = step;
         this.start = start;
     }
+
+    @Override
     public void run() {
 
-        int rowSize = MultiplierNew.getSizeRow();
-        int columnSize = MultiplierNew.getSizeColumn();
-        int sum = 0;
+        int rowSize = Multiplier.getSizeRow();
+        int columnSize = Multiplier.getSizeColumn();
 
-        for(int i = step; i < rowSize; i+=step){
-            for(int j = 0; j < columnSize; j++){
+        for(int i = start; i < rowSize * columnSize; i+=step){
 
-                int []row = MultiplierNew.getRow(i);
-                int []column = MultiplierNew.getColumn(j);
+            int []row = Multiplier.getRow(i / columnSize);
+            int []col = Multiplier.getColumn(i % columnSize);
 
-                for(int k=0;k<row.length;k++){
-                    sum += row[k] * column[k];
-                }
-
-                MultiplierNew.setElementProductMatrix(sum, i, j);
+            int sum = 0;
+            for(int j = 0; j < row.length; j++) {
+                sum += row[j]*col[j];
             }
+
+//            System.out.println(Thread.currentThread().getName() + ": row=" + (i / columnSize) + ", col=" + (i % columnSize));
+//
+            Multiplier.setElementProductMatrix(sum, i/columnSize, i % columnSize);
         }
     }
 }
